@@ -224,7 +224,7 @@ class Video extends React.Component {
   }
 
   render() {
-    const {subtitles, loop, autoPlay, poster, preload, sources, controlPanelStyle, autoHideControls} = this.props
+    const {chapters, loop, autoPlay, poster, preload, sources, controlPanelStyle, autoHideControls} = this.props
     //html5 video options
     var options = {
       loop,
