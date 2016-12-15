@@ -288,7 +288,6 @@ class Video extends React.Component {
 						</div>
 						<span	className="r5-timecode">{this.state.currentTime + " / " + this.state.duration}</span>
 						<div className="r5-pull-right">
-							{ this.$subTitleMenu || this.$getSubtitleTracksMenu() || ""}
 							<button className="r5-fullscreen" onClick={this._fullscreen}>{this.icons.fullscreen}</button>
 						</div>
 					</div>
