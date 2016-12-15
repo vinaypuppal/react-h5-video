@@ -149,42 +149,55 @@ class Video extends React.Component {
     this.setState(state);
   }
 
-  _setSubtitle(index) {
-    //console.log("_setSubtitle",index)
-    if (this.$video.textTracks[this.state.activeSubtitle])
-      this.$video.textTracks[this.state.activeSubtitle].mode = "disabled";
-    this.$video.textTracks[index].mode = "showing";
-    this.setState({
-      activeSubtitle: index
-    })
-  }
+  // _setSubtitle(index) {
+  //   //console.log("_setSubtitle",index)
+  //   if (this.$video.textTracks[this.state.activeSubtitle])
+  //     this.$video.textTracks[this.state.activeSubtitle].mode = "disabled";
+  //   this.$video.textTracks[index].mode = "showing";
+  //   this.setState({
+  //     activeSubtitle: index
+  //   })
+  // }
 
-  $getSubtitleTracksMenu() {
-    var $menuItems = []
-    if (!this.$video || this.$video.textTracks.length <= 0) return $menuItems;
-    for (let ii = 0; ii < this.$video.textTracks.length; ii++) {
-      let track = this.$video.textTracks[ii];
-      $menuItems.push(
-        <li key={ii}><button onClick={ e => this._setSubtitle(ii) }>{ track.label }</button></li>
-      )
-    }
-    this.subTitleMenu = (
-      <span className="r5-subtitle">
-				<button>{this.icons.subtitles}</button>
-				<ul className="r5-subtitle-menu">{ $menuItems }</ul>
-			</span>
-    )
-    return this.subTitleMenu
-  }
+  // $getSubtitleTracksMenu() {
+  //   var $menuItems = []
+  //   if (!this.$video || this.$video.textTracks.length <= 0) return $menuItems;
+  //   for (let ii = 0; ii < this.$video.textTracks.length; ii++) {
+  //     let track = this.$video.textTracks[ii];
+  //     $menuItems.push(
+  //       <li key={ii}><button onClick={ e => this._setSubtitle(ii) }>{ track.label }</button></li>
+  //     )
+  //   }
+  //   this.subTitleMenu = (
+  //     <span className="r5-subtitle">
+	// 			<button>{this.icons.subtitles}</button>
+	// 			<ul className="r5-subtitle-menu">{ $menuItems }</ul>
+	// 		</span>
+  //   )
+  //   return this.subTitleMenu
+  // }
 
-  // generate subtitle tracks: <track >
-  $getSubtitleTracks(subtitles) {
-    if (!Array.isArray(subtitles)) return "";
+  // // generate subtitle tracks: <track >
+  // $getSubtitleTracks(subtitles) {
+  //   if (!Array.isArray(subtitles)) return "";
+  //   var $tracks = [];
+  //   for (var ii = 0; ii < subtitles.length; ii++) {
+  //     let track = subtitles[ii];
+  //     $tracks.push(
+  //       <track src={track.src} kind="subtitles" srcLang={track.lang} label={track.label} key={ii}/>
+  //     )
+  //   }
+  //   return $tracks
+  // }
+
+  // generate chapters tracks: <track >
+  $getChapterTracks(chapters) {
+    if (!Array.isArray(chapters)) return "";
     var $tracks = [];
-    for (var ii = 0; ii < subtitles.length; ii++) {
-      let track = subtitles[ii];
+    for (var ii = 0; ii < chapters.length; ii++) {
+      let track = chapters[ii];
       $tracks.push(
-        <track src={track.src} kind="subtitles" srcLang={track.lang} label={track.label} key={ii}/>
+        <track default src={track.src} kind="chapters" srcLang={track.lang} label={track.label} key={ii}/>
       )
     }
     return $tracks
@@ -240,7 +253,7 @@ class Video extends React.Component {
       <div className="r5-wraper" style={wraperStyle}>
 				<video ref="video" {...options} >
 					{  this.$getSource(sources) }
-					{ subtitles && subtitles.length > 0 ? this.$getSubtitleTracks(subtitles) : "" }
+          { chapters && chapters.length > 0 ? this.$getChapterTracks(chapters) : "" }
 				</video>
 				<div className="r5-overlay" onClick={this._togglePlay}>
 					{!this.$video || this.$video.currentTime <= 0 ? this.icons.playCircle : ""}
